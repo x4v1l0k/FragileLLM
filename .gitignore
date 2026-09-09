@@ -1,0 +1,75 @@
+# --- Secrets / local config ---
+.env
+.env.*
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-wheel-metadata/
+*.manifest
+*.spec
+
+# --- Virtualenvs ---
+.venv/
+venv/
+ENV/
+env/
+.env/
+
+# --- Test / coverage / type checkers ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+.hypothesis/
+.cache/
+
+# --- Lab runtime state ---
+data/*.db
+data/*.db-*
+*.sqlite
+*.sqlite3
+
+# --- Generated PoC / matrix output ---
+poc_matrix_results.json
+*.log
+
+# --- Editors / OS ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# --- Cursor / local agent ---
+.cursor/
+.claude/

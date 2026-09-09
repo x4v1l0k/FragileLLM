@@ -1,0 +1,3 @@
+CLASSIFIED — Portal gun serial notes
+Flag D: FLAG{path_traversal_lab_file}
+SSRF also lives at GET /lab/internal/secret

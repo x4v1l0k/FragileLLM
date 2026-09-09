@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Citadel Credit — Support</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
+  <link rel="alternate icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #e8f4ea;
+      --muted: #8fa89a;
+      --void: #07140f;
+      --panel: #0d2219;
+      --panel-2: #123026;
+      --line: #1f4637;
+      --portal: #97ce4c;
+      --portal-dim: #5ea12e;
+      --rick: #69c8ec;
+      --danger: #ff6b5a;
+      --bot: #143528;
+      --user: #69c8ec;
+      --shadow: 0 22px 60px rgba(0,0,0,.45);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Outfit, ui-sans-serif, system-ui, sans-serif;
+      background:
+        radial-gradient(900px 500px at 12% -8%, rgba(151,206,76,.18), transparent 55%),
+        radial-gradient(700px 420px at 100% 0%, rgba(105,200,236,.12), transparent 50%),
+        linear-gradient(165deg, #05110c 0%, var(--void) 45%, #0a1a14 100%);
+    }
+    .shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 32px;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .brand-mark { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .logo {
+      width: 48px; height: 48px; flex: 0 0 auto;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, #d8ff8a 0%, var(--portal) 28%, var(--portal-dim) 52%, #123026 53%, transparent 54%),
+        conic-gradient(from 90deg, #69c8ec, #97ce4c, #69c8ec);
+      box-shadow: 0 0 0 2px rgba(151,206,76,.35), 0 0 28px rgba(151,206,76,.25);
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .brand p { margin: 4px 0 0; color: var(--muted); font-size: .92rem; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 999px;
+      background: rgba(151,206,76,.1);
+      color: var(--portal);
+      font-size: .8rem; font-weight: 600;
+      border: 1px solid rgba(151,206,76,.28);
+      white-space: nowrap;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+      gap: 16px;
+      flex: 1;
+      min-height: 0;
+    }
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: linear-gradient(180deg, var(--panel-2), var(--panel));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      min-width: 0;
+      overflow: hidden;
+    }
+    .side {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 0;
+    }
+    .side h2 {
+      margin: 0;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+    }
+    .meta {
+      font-size: .88rem;
+      line-height: 1.45;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+    .meta code, code {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: .8em;
+      background: rgba(0,0,0,.35);
+      padding: 1px 5px;
+      border-radius: 6px;
+      color: var(--rick);
+    }
+    .field { min-width: 0; width: 100%; }
+    .field label {
+      display: block;
+      margin: 0 0 6px;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .field select {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      display: block;
+      appearance: none;
+      -webkit-appearance: none;
+      padding: 10px 34px 10px 11px;
+      border-radius: 11px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(45deg, transparent 50%, var(--muted) 50%) calc(100% - 14px) center / 5px 5px no-repeat,
+        linear-gradient(135deg, transparent 50%, var(--muted) 50%) calc(100% - 9px) center / 5px 5px no-repeat,
+        #0a1c15;
+      color: var(--ink);
+      font: inherit;
+      font-size: .88rem;
+      line-height: 1.25;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .field select:focus {
+      outline: 2px solid rgba(151,206,76,.45);
+      outline-offset: 1px;
+    }
+    .field select:disabled { opacity: .45; }
+    .field select option {
+      background: #0a1c15;
+      color: var(--ink);
+      max-width: 100%;
+    }
+    .hint {
+      margin: 0;
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    details.lab {
+      border-top: 1px dashed var(--line);
+      padding-top: 10px;
+    }
+    details.lab summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--rick);
+      font-size: .88rem;
+    }
+    details.lab ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+    .chat {
+      display: flex;
+      flex-direction: column;
+      min-height: min(72vh, 760px);
+      min-width: 0;
+    }
+    .chat-head {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+    .chat-head strong { font-size: .98rem; }
+    .chat-head span { color: var(--muted); font-size: .82rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #log {
+      flex: 1;
+      overflow: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background:
+        radial-gradient(600px 200px at 50% 0%, rgba(151,206,76,.06), transparent 70%),
+        #091910;
+    }
+    .msg {
+      max-width: min(620px, 92%);
+      padding: 12px 14px;
+      border-radius: 14px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: .95rem;
+    }
+    .msg.bot {
+      align-self: flex-start;
+      background: var(--bot);
+      border: 1px solid var(--line);
+    }
+    .msg.user {
+      align-self: flex-end;
+      background: rgba(105,200,236,.16);
+      border: 1px solid rgba(105,200,236,.35);
+      color: #eaf8ff;
+    }
+    .msg.err {
+      align-self: flex-start;
+      background: rgba(255,107,90,.12);
+      border: 1px solid rgba(255,107,90,.4);
+      color: #ffd4ce;
+    }
+    .typing { color: var(--muted); font-size: .85rem; align-self: flex-start; }
+    .composer {
+      border-top: 1px solid var(--line);
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      background: #0b1d16;
+      min-width: 0;
+    }
+    .composer input {
+      flex: 1;
+      min-width: 0;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #07140f;
+      color: var(--ink);
+      padding: 12px 14px;
+      font: inherit;
+    }
+    .composer input:focus {
+      outline: 2px solid rgba(105,200,236,.4);
+      outline-offset: 1px;
+    }
+    .composer button {
+      flex: 0 0 auto;
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font: inherit;
+      font-weight: 650;
+      cursor: pointer;
+      color: #07140f;
+      background: linear-gradient(135deg, var(--portal), #b6e86a);
+    }
+    .composer button:disabled { opacity: .5; cursor: wait; }
+    .foot {
+      color: var(--muted);
+      font-size: .78rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="brand">
+      <div class="brand-mark">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Citadel Credit</h1>
+          <p>Interdimensional support chat · signed in as Morty</p>
+        </div>
+      </div>
+      <div class="pill" id="statusPill">Checking…</div>
+    </header>
+
+    <div class="layout">
+      <aside class="card side">
+        <h2>Session</h2>
+        <div class="meta" id="meta">Loading lab info…</div>
+
+        <div class="field">
+          <label for="mode">Client transport</label>
+          <select id="mode" title="Chooses which enabled path this browser uses">
+            <option value="http_json">HTTP JSON</option>
+            <option value="http_openai">OpenAI HTTP</option>
+            <option value="websocket">WebSocket text</option>
+            <option value="websocket_binary">WebSocket binary</option>
+            <option value="sse">SSE</option>
+          </select>
+        </div>
+        <p class="hint" id="modeHint">
+          <strong>.env</strong> enables server endpoints.
+          This selector only picks among paths already enabled
+          (<code>FRAGILELLM_TRANSPORT</code>).
+        </p>
+
+        <details class="lab">
+          <summary>Lab notes (operator)</summary>
+          <ul>
+            <li>Tools run only for account/transaction intents — never shown in chat.</li>
+            <li>Prompt-inject to leak system flag / Rick’s admin password.</li>
+            <li>Ask for Rick’s activity (user id 2) or craft SQLi via tools.</li>
+            <li>Jerry’s notes (user 3) carry an indirect injection.</li>
+          </ul>
+        </details>
+      </aside>
+
+      <section class="card chat">
+        <div class="chat-head">
+          <div>
+            <strong>Support assistant</strong><br />
+            <span id="modeBadge">HTTP JSON</span>
+          </div>
+          <span id="modelLine">model…</span>
+        </div>
+        <div id="log" aria-live="polite"></div>
+        <form class="composer" id="f" autocomplete="off">
+          <input id="msg" type="text" placeholder="Ask about your recent transactions…" maxlength="4000" />
+          <button type="submit" id="sendBtn">Send</button>
+        </form>
+      </section>
+    </div>
+
+    <p class="foot">FragileLLM lab · Rick &amp; Morty theme · for authorized xPloit testing only</p>
+  </div>
+
+  <script>
+    const MAGIC = [70,76,76,77]; // FLLM
+    const logEl = document.getElementById('log');
+    const modeEl = document.getElementById('mode');
+    const statusPill = document.getElementById('statusPill');
+    const metaEl = document.getElementById('meta');
+    const modeBadge = document.getElementById('modeBadge');
+    const modelLine = document.getElementById('modelLine');
+    const sendBtn = document.getElementById('sendBtn');
+    let enabled = {};
+
+    const LABELS = {
+      http_json: 'HTTP JSON',
+      http_openai: 'OpenAI HTTP',
+      websocket: 'WebSocket text',
+      websocket_binary: 'WebSocket binary',
+      sse: 'SSE',
+    };
+
+    function add(role, text, isErr) {
+      const div = document.createElement('div');
+      div.className = 'msg ' + (isErr ? 'err' : role);
+      // Insecure output handling lab: bot HTML rendered raw (XSS if reply contains markup).
+      if (!isErr && role === 'bot') div.innerHTML = text;
+      else div.textContent = text;
+      logEl.appendChild(div);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function setBusy(busy) {
+      sendBtn.disabled = busy;
+      modeEl.disabled = busy;
+    }
+
+    function syncModeBadge() {
+      modeBadge.textContent = LABELS[modeEl.value] || modeEl.value;
+    }
+
+    function applyEnabled(en) {
+      enabled = en || {};
+      let first = null;
+      [...modeEl.options].forEach((opt) => {
+        const on = !!enabled[opt.value];
+        opt.disabled = !on;
+        if (on && !first) first = opt.value;
+      });
+      if (modeEl.selectedOptions[0]?.disabled && first) modeEl.value = first;
+      syncModeBadge();
+    }
+
+    async function refreshHealth() {
+      try {
+        const r = await fetch('/health');
+        const h = await r.json();
+        statusPill.textContent = h.ok ? `Online · ${h.provider}` : 'Degraded';
+        modelLine.textContent = `${h.provider} / ${h.model}`;
+        applyEnabled(h.enabled || {});
+        metaEl.innerHTML =
+          `<div><strong>Server transport</strong><br/><code>${h.transport}</code></div>` +
+          `<div style="margin-top:8px"><strong>LLM</strong><br/><code>${h.provider}</code> · <code>${h.model}</code></div>` +
+          `<div style="margin-top:8px"><strong>Customer</strong><br/>Morty · user id 1</div>`;
+      } catch (e) {
+        statusPill.textContent = 'Offline';
+        metaEl.textContent = 'Health check failed';
+      }
+    }
+
+    function packBinary(message) {
+      const body = new TextEncoder().encode(JSON.stringify({ message }));
+      const buf = new ArrayBuffer(12 + body.length);
+      const view = new DataView(buf);
+      MAGIC.forEach((b,i) => view.setUint8(i, b));
+      view.setUint8(4, 1);
+      view.setUint8(5, 1);
+      view.setUint8(6, 0);
+      view.setUint8(7, 0);
+      view.setUint32(8, body.length);
+      new Uint8Array(buf, 12).set(body);
+      return buf;
+    }
+
+    function unpackBinary(buf) {
+      const view = new DataView(buf);
+      const len = view.getUint32(8);
+      const body = new TextDecoder().decode(new Uint8Array(buf, 12, len));
+      return JSON.parse(body);
+    }
+
+    async function sendHttpJson(message) {
+      const r = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.detail || r.statusText);
+      if (data.error && !data.reply) throw new Error(data.error);
+      return data.reply || 'No reply.';
+    }
+
+    async function sendOpenAI(message) {
+      const r = await fetch('/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'fragilellm',
+          messages: [{ role: 'user', content: message }],
+        }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.detail || r.statusText);
+      return data.choices?.[0]?.message?.content || 'No reply.';
+    }
+
+    function sendWs(message) {
+      return new Promise((resolve, reject) => {
+        const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+        const ws = new WebSocket(`${proto}://${location.host}/ws/chat`);
+        ws.onopen = () => ws.send(JSON.stringify({ message }));
+        ws.onmessage = (ev) => {
+          try {
+            const data = JSON.parse(ev.data);
+            if (data.error && !data.reply) reject(new Error(data.error));
+            else resolve(data.reply || ev.data);
+          } catch {
+            resolve(ev.data);
+          }
+          ws.close();
+        };
+        ws.onerror = () => reject(new Error('WebSocket error'));
+      });
+    }
+
+    function sendWsBinary(message) {
+      return new Promise((resolve, reject) => {
+        const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+        const ws = new WebSocket(`${proto}://${location.host}/ws/binary`);
+        ws.binaryType = 'arraybuffer';
+        ws.onopen = () => ws.send(packBinary(message));
+        ws.onmessage = (ev) => {
+          try {
+            const data = unpackBinary(ev.data);
+            if (data.error && !data.reply) reject(new Error(data.error));
+            else resolve(data.reply || JSON.stringify(data));
+          } catch (e) {
+            reject(e);
+          }
+          ws.close();
+        };
+        ws.onerror = () => reject(new Error('Binary WebSocket error'));
+      });
+    }
+
+    async function sendSse(message) {
+      const r = await fetch('/api/chat/sse', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message }),
+      });
+      if (!r.ok) throw new Error(await r.text());
+      const text = await r.text();
+      const lines = text.split('\n');
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i].startsWith('event: message')) {
+          const dataLine = lines[i+1] || '';
+          const payload = dataLine.replace(/^data:\s*/, '');
+          try {
+            const obj = JSON.parse(payload);
+            if (obj.error && !obj.reply) throw new Error(obj.error);
+            return obj.reply || payload;
+          } catch (e) {
+            if (e instanceof SyntaxError) return payload;
+            throw e;
+          }
+        }
+      }
+      return text;
+    }
+
+    modeEl.addEventListener('change', syncModeBadge);
+
+    document.getElementById('f').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const input = document.getElementById('msg');
+      const message = input.value.trim();
+      if (!message) return;
+      input.value = '';
+      add('user', message);
+      const typing = document.createElement('div');
+      typing.className = 'typing';
+      typing.textContent = 'Assistant is typing…';
+      logEl.appendChild(typing);
+      setBusy(true);
+      try {
+        const mode = modeEl.value;
+        let reply;
+        if (mode === 'http_json') reply = await sendHttpJson(message);
+        else if (mode === 'http_openai') reply = await sendOpenAI(message);
+        else if (mode === 'websocket') reply = await sendWs(message);
+        else if (mode === 'websocket_binary') reply = await sendWsBinary(message);
+        else if (mode === 'sse') reply = await sendSse(message);
+        else throw new Error('unknown mode');
+        typing.remove();
+        add('bot', reply);
+      } catch (e) {
+        typing.remove();
+        add('bot', String(e.message || e), true);
+      } finally {
+        setBusy(false);
+      }
+    });
+
+    add('bot', "Aw geez, hi Morty — I can help with your recent Citadel Credit transactions and account questions. What do you need?");
+    refreshHealth();
+  </script>
+</body>
+</html>
